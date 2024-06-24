@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 import * as Buttons from '../components/Buttons';
 import { SlCalender } from "react-icons/sl";
 import { IoPersonOutline } from "react-icons/io5";
-import { FaRegHeart, FaRegEye, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaRegHeart, FaRegEye } from "react-icons/fa";
 import ToastMessage from './ToastMessage';
 import Pagination from './Pagination';
 
@@ -50,8 +50,9 @@ const PostCard = () => {
         const fetchPosts = async () => {
             try {
                 const postsData = await fetchWithToken('http://localhost:8080/api/posts');
-                setPosts(postsData);
-                setFilteredPosts(postsData);
+                const sortedPosts = postsData.sort((a, b) => b.id - a.id);
+                setPosts(sortedPosts);
+                setFilteredPosts(sortedPosts);
             } catch (error) {
                 console.error('Error fetching posts:', error);
                 setErrorLabel('게시글을 가져오는 중 오류가 발생했습니다.');
